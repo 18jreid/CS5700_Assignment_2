@@ -1,4 +1,0 @@
-/Users/justinreid/IdeaProjects/CS5700_Assign2/src/main/kotlin/Main.kt
-/Users/justinreid/IdeaProjects/CS5700_Assign2/src/main/kotlin/ShipmentUpdate.kt
-/Users/justinreid/IdeaProjects/CS5700_Assign2/src/main/kotlin/TrackerViewHelper.kt
-/Users/justinreid/IdeaProjects/CS5700_Assign2/src/main/kotlin/Shipment.kt

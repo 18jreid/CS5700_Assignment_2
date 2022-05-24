@@ -1,17 +1,17 @@
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 class TrackerViewHelper {
-    var shipmentId = remember { mutableStateOf("") }
+    var shipmentId by mutableStateOf("")
+    var shipmentTotes = mutableStateListOf<String>()
         private set;
-    var shipmentTotes = remember { mutableStateListOf<String>() }
+    var shipmentUpdateHistory = mutableStateListOf<String>()
         private set;
-    var shipmentUpdateHistory = remember { mutableStateListOf<String>() }
+    var expectedShipmentDeliveryDate = mutableStateListOf<String>()
         private set;
-    var expectedShipmentDeliveryDate = remember { mutableStateListOf<String>() }
-        private set;
-    var shipmentStatus = remember { mutableStateOf("") }
+    var shipmentStatus by mutableStateOf("")
         private set;
 
     fun trackShipment() {
