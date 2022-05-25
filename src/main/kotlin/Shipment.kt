@@ -1,22 +1,58 @@
-class Shipment {
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+
+class Shipment(status: String, id: String, updateHistory: MutableList<String>, expectedDeliveryDateTimeStamp: Long): Observable {
     var status: String = ""
-        private set;
     var id: String = ""
+    var notes: MutableList<String> = mutableStateListOf()
         private set;
-    var notes: List<String> = listOf()
-        private set;
-    var updateHistory: List<ShipmentUpdate> = listOf()
+    var updateHistory: MutableList<String> = mutableStateListOf()
         private set;
     var expectedDeliveryDateTimeStamp: Long = 0L
-        private set;
     var currentLocation: String = ""
-        private set;
-
-    fun addNote(note: String) {
-
+    private val observers = mutableListOf<Observer>()
+    private var numSecondsPassed = 0
+    private var isRunning = false
+    init {
+        this.status = status
+        this.id = id
+        this.updateHistory = updateHistory
+        this.expectedDeliveryDateTimeStamp = expectedDeliveryDateTimeStamp
     }
 
-    fun addUpdate(update: ShipmentUpdate) {
+    fun addNote(note: String) {
+        this.notes.add(note)
+    }
 
+    fun addUpdate(update: String) {
+        this.updateHistory.add(update)
+    }
+
+    override fun addObserver(observer: Observer) {
+        observers.add(observer)
+    }
+
+    override fun removeObserver(observer: Observer) {
+        observers.remove(observer)
+    }
+
+    private fun notifyObservers() {
+        observers.forEach { it.notify(numSecondsPassed)}
+    }
+
+    suspend fun start() {
+        isRunning = true;
+        while (isRunning) {
+            delay(1000)
+            numSecondsPassed += 1
+            notifyObservers()
+        }
+    }
+
+    fun stop() {
+        isRunning = false
     }
 }
