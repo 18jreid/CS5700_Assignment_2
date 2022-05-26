@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,7 +25,7 @@ fun TrackerView(helper: TrackerViewHelper, removeMessage: () -> Unit) {
                 }
                 Column {
                     Button(removeMessage) {
-                        Text("X")
+                        Text("Delete")
                     }
                 }
             }
@@ -34,8 +36,6 @@ fun TrackerView(helper: TrackerViewHelper, removeMessage: () -> Unit) {
 @Composable
 @Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
-
     MaterialTheme {
         var shipmentSearch by remember { mutableStateOf("") }
         val viewHelpers = remember { mutableStateListOf<TrackerViewHelper>() }
@@ -69,6 +69,7 @@ fun App() {
 }
 
 fun main() = application {
+    rememberCoroutineScope().launch { TrackingSimulator.runSimulation() }
     Window(onCloseRequest = ::exitApplication) {
         App()
     }

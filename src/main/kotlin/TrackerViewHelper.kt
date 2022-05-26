@@ -16,10 +16,9 @@ class TrackerViewHelper(id: String): Observer {
         private set;
     var numSecondsPassed by mutableStateOf(0)
 
-    var shipment: Shipment = Shipment("created", id, shipmentUpdateHistory, 0L)
+    var shipment: Shipment = Shipment("created", id)
     init {
         shipment.addObserver(this)
-        this.shipmentId = id
     }
 
     override fun notify(numSecondsPassed: Int) {

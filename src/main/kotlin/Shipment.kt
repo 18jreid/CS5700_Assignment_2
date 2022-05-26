@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.delay
 
-class Shipment(status: String, id: String, updateHistory: MutableList<String>, expectedDeliveryDateTimeStamp: Long): Observable {
+class Shipment(status: String, id: String): Observable {
     var status: String = ""
     var id: String = ""
     var notes: MutableList<String> = mutableStateListOf()
@@ -13,14 +13,13 @@ class Shipment(status: String, id: String, updateHistory: MutableList<String>, e
         private set;
     var expectedDeliveryDateTimeStamp: Long = 0L
     var currentLocation: String = ""
+
     private val observers = mutableListOf<Observer>()
     private var numSecondsPassed = 0
     private var isRunning = false
     init {
         this.status = status
         this.id = id
-        this.updateHistory = updateHistory
-        this.expectedDeliveryDateTimeStamp = expectedDeliveryDateTimeStamp
     }
 
     fun addNote(note: String) {
