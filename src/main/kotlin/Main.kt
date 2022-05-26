@@ -19,10 +19,7 @@ fun TrackerView(helper: TrackerViewHelper, removeMessage: () -> Unit) {
             Text(helper.numSecondsPassed.toString())
             Row {
                 Column(modifier = Modifier.width(700.dp)) {
-                    Text(helper.shipmentId)
-                    Text(helper.shipmentStatus)
-                    Text(helper.shipmentTotes.toString())
-                    Text(helper.expectedShipmentDeliveryDate.toString())
+                    Text("Tracking Shipment: " + helper.shipmentId.toString())
                 }
                 Column {
                     Button(removeMessage) {
@@ -48,22 +45,22 @@ fun App() {
             Row {
                 TextField(shipmentSearch, onValueChange = {shipmentSearch = it}, modifier = Modifier.width(700.dp))
                 Button({
-                    val viewHelper: TrackerViewHelper = TrackerViewHelper()
+                    val viewHelper: TrackerViewHelper = TrackerViewHelper(shipmentSearch)
                     viewHelpers.add(viewHelper)
                     shipmentSearch = "";
+
+                    coroutineScope.launch {
+                        viewHelper.start()
+                    }
                 }, modifier = Modifier.height(57.dp)) {
-                    Text("Add Message")
+                    Text("Track")
                 }
             }
 
             Row {
                 LazyColumn {
                     items(viewHelpers.reversed()) { helper ->
-                        TrackerView(helper) {
-                            coroutineScope.launch {
-                                helper.start()
-                            }
-                        }
+                        TrackerView(helper) { viewHelpers.remove(helper) }
                     }
                 }
             }
